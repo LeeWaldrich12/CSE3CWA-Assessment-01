@@ -2,6 +2,7 @@ const express = require("express");
 const db = require("./db");
 const fs = require("fs");
 const cors = require("cors");
+const { calculateQuote } = require("./calculator");
 
 const app = express();
 
@@ -20,7 +21,7 @@ db.exec(initSQL, (err) => {
     }
 });
 
-// Post
+// POST
 app.post("/quotes", (req, res) => {
     const {
         customerName,
@@ -67,14 +68,14 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     ], 
     function(err) {
         if (err) {
-            res.status(500).json({ error: err.message });
+            return res.status(500).json({ error: err.message });
         } 
         
         return res.json({ message: "Quote created successfully", quoteId: this.lastID });
     });
 });
 
-//Get
+//GET
 app.get("/quotes", (req, res) => {
     const sql = "SELECT * FROM quotes";
     db.all(sql, [], (err, rows) => {
@@ -101,7 +102,30 @@ app.get("/quotes/:id", (req, res) => {
                 error: "Quote not found"
             });
         }
-        return res.json(row);
+        const calculation = calculateQuote(row);
+
+        return res.json({
+            ...row,
+            calculation
+        });
+    });
+});
+
+//DELETE
+app.delete("/quotes/:id", (req, res) => {
+    const { id } = req.params;
+    const sql = "DELETE FROM quotes WHERE id = ?";
+
+    db.run(sql, [id], function(err) {
+        if (err) {
+            return res.status(500).json({
+                error: err.message
+            });
+        }
+
+        return res.json({
+            message: "Quote deleted successfully",
+        });
     });
 });
 
