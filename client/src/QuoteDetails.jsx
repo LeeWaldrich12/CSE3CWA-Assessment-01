@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 function QuoteDetail() {
     const [quote, setQuote] = useState(null);
+    const { id } = useParams();
 
     useEffect(() => {
-        fetch("http://localhost:5000/quotes/1")
+        fetch(`http://localhost:5000/quotes/${id}`)
             .then((response) => response.json())
             .then((data) => setQuote(data))
             .catch((error) => console.error(error));
@@ -69,6 +71,19 @@ function QuoteDetail() {
             <p>
                 Lifetime Health Cover loading applies only to hospital cover. It does not apply to extras cover.
             </p>
+
+        {quote.applicant1_cover_history === "Not sure" && (
+            <p>
+                Warning: Applicant 1 cover history is unknown. LHC loading has not been applied. This quote may be inaccurate.
+            </p>
+        )}
+
+        {quote.applicant2_cover_history === "Not sure" && (
+            <p>
+                Warning: Applicant 2 cover history is unknown. LHC loading has not been applied. This quote may be inaccurate.  
+            </p>
+        )}
+
         </div>
     );
 }

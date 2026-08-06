@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function QuoteList() {
     const [quotes, setQuotes] = useState([]);
@@ -16,9 +17,9 @@ function QuoteList() {
 
             {quotes.map((quote) => (
                 <div key={quote.id}>
-                    <p>
+                    <Link to={`/quotes/${quote.id}`}>
                         {quote.customer_name} - {quote.cover_type}
-                    </p>
+                    </Link>
                 </div>
             ))}
         </div>

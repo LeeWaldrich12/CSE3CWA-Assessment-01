@@ -75,6 +75,52 @@ VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
     });
 });
 
+app.put("/quotes/:id", (req, res) => {
+    const { id } = req.params;
+
+    const {
+        customerName,
+        coverType,
+        applicant1Age,
+        applicant1History,
+        applicant2Age,
+        applicant2History,
+        hospitalCoverLevel,
+        extrasCoverLevel,
+        paymentFrequency,
+        annualDiscount,
+        notes
+    } = req.body;
+
+    console.log(req.body);
+
+    const sql = `
+    UPDATE quotes
+    SET customer_name = ?
+    WHERE id = ?
+    `;
+
+    db.run(
+        sql,
+        [
+            customerName,
+            id
+        ],
+        function (err) {
+            if (err) {
+                return res.status(500).json({
+                    error: err.message
+                });
+            }
+
+            return res.json({
+                message: "Quote updated successfully"
+            });
+        }
+    );
+});
+
+
 //GET
 app.get("/quotes", (req, res) => {
     const sql = "SELECT * FROM quotes";

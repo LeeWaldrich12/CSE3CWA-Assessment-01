@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 function EditQuote() {
     const [customerName, setCustomerName] = useState("");
+    const { id } = useParams();
 
     useEffect(() => {
-        fetch("http://localhost:5000/quotes/1")
+        fetch(`http://localhost:5000/quotes/${id}`)
             .then((response) => response.json())
             .then((data) => {
                 setCustomerName(data.customer_name);
@@ -12,7 +14,7 @@ function EditQuote() {
     }, []);
 
     const handleUpdate = () => {
-        fetch("http://localhost:5000/quotes/1", {
+        fetch(`http://localhost:5000/quotes/${id}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json"
@@ -26,6 +28,19 @@ function EditQuote() {
                 alert("Quote updated successfully");
                 console.log(data);
             });
+    };
+
+    const handleDelete = () => {
+    fetch(`http://localhost:5000/quotes/${id}`, {
+        method: "DELETE"
+    })
+        .then((response) => response.json())
+        .then((data) => {
+            alert(data.message);
+        })
+        .catch((error) => {
+            console.error(error);
+        });
     };
 
     return (
@@ -46,6 +61,9 @@ function EditQuote() {
 
             <button onClick={handleUpdate}>
                 Update Quote
+            </button>
+            <button onClick={handleDelete}>
+                Delete Quote
             </button>
         </div>
     );

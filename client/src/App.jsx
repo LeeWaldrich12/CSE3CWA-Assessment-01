@@ -1,13 +1,21 @@
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
 import CreateQuote from "./CreateQuote";
 import QuoteList from "./QuoteList";
-import QuoteDetails from "./QuoteDetails";
+import QuoteDetail from "./QuoteDetails";
+import EditQuote from "./EditQuote";
 
 function App() {
-  return (
-    <div>
-      <QuoteDetails />
-    </div>
-  );
+    return (
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<CreateQuote />} />
+                <Route path="/quotes" element={<QuoteList />} />
+                <Route path="/quotes/:id" element={<QuoteDetail />} />
+                <Route path="/edit/:id" element={<EditQuote />} />
+            </Routes>
+        </BrowserRouter>
+    );
 }
 
 export default App;
