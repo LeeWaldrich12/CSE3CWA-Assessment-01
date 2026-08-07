@@ -1,16 +1,73 @@
-# React + Vite
+# HealthCoverSim
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## Overview
 
-Currently, two official plugins are available:
+HealthCoverSim is a React, Express and SQLite application that allows users to create, view, update and delete private health insurance quotes.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Installation
 
-## React Compiler
+Backend:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```bash
+cd server
+npm install
+npm run dev
+```
 
-## Expanding the Oxlint configuration
+Frontend:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+```bash
+cd client
+npm install
+npm run dev
+```
+
+## Database Setup
+
+SQLite is used for storage.
+
+The database is automatically created using the provided init.sql script when the backend starts.
+
+## Quote Calculation
+
+Monthly Premium:
+
+```text
+Hospital Premium
++ Extras Premium
++ Family Fee
+```
+
+Yearly Premium:
+
+```text
+Monthly Premium × 12
+```
+
+Yearly Discounted Premium:
+
+```text
+Yearly Premium × (1 − Discount %)
+```
+
+Lifetime Health Cover (LHC) loading applies only to hospital cover.
+
+## Family Cover
+
+Family cover includes two adults and automatically adds a $30 monthly family upgrade fee.
+
+## Limitation
+
+The simulator uses simplified pricing rules and does not represent real insurer pricing.
+
+## AI Usage Statement
+
+Microsoft Copilot was used to assist with:
+
+- Setting up and debugging the Express and SQLite backend
+- Debugging CRUD API endpoints
+- Debugging React frontend and API integration issues
+- Debugging and verifying the premium calculation logic
+- Helped with README documentation
+
+Microsoft Copilot was used to assist with setting up and debugging the Express and SQLite backend, debugging CRUD API endpoints, and troubleshooting React frontend integration issues. All AI-generated suggestions were reviewed, tested and modified before use.
