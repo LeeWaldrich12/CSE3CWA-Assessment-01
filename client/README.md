@@ -68,6 +68,6 @@ Microsoft Copilot was used to assist with:
 - Debugging CRUD API endpoints
 - Debugging React frontend and API integration issues
 - Debugging and verifying the premium calculation logic
-- Helped with README documentation
+- Assisted with README documentation
 
 Microsoft Copilot was used to assist with setting up and debugging the Express and SQLite backend, debugging CRUD API endpoints, and troubleshooting React frontend integration issues. All AI-generated suggestions were reviewed, tested and modified before use.
